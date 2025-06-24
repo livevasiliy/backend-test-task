@@ -1,9 +1,11 @@
 version: '3.8'
 services:
   php:
-    image: php:8.3-fpm
+    build:
+      dockerfile: docker/Dockerfile
+      context: ./
     volumes:
-      - .:/var/www/html
+      - .:/app
     depends_on:
       - database
     environment:
@@ -16,6 +18,8 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   nginx:
     image: nginx:latest
     volumes:
